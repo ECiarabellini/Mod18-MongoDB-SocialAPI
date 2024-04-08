@@ -52,4 +52,36 @@ module.exports = {
       res.status(500).json(err);
     }
   },
+
+  // Add a new friend to a user's friend list (POST)
+  async addFriend(req, res) {
+    try {
+      const user = await User.findById(req.params.userId);
+      const friend = await User.findById(req.params.friendId);
+      if (!user || !friend) {
+        return res.status(404).json({ message: 'User or friend not found' });
+      }
+      user.friends.push(friend._id);
+      await user.save();
+      res.json(user);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
+
+  // Delete a  friend to a user's friend list (DELETE)
+  async deleteFriend(req, res) {
+    try {
+      const user = await User.findById(req.params.userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      user.friends = user.friends.filter(friendId => friendId.toString() !== req.params.friendId);
+      await user.save();
+      res.json(user);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
+
 };
