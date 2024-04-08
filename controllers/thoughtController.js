@@ -47,13 +47,20 @@ module.exports = {
   // Updates a thought by its ID (PUT)
   async updateThought(req, res) {
     try {
-      const thought = await Thought.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const thought = await Thought.findOneAndUpdate(
+        { _id: req.params.thoughtId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+      );
+
       if (!thought) {
-        return res.status(404).json({ message: 'Thought not found' });
+        return res.status(404).json({ message: 'No thought with this id!' });
       }
+
       res.json(thought);
     } catch (err) {
-      res.status(400).json({ message: err.message });
+      console.log(err);
+      res.status(500).json(err);
     }
   },
   // Deletes a thought by its ID (DELETE)
