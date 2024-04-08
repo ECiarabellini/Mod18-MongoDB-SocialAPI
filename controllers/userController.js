@@ -37,6 +37,22 @@ module.exports = {
     }
   },
 
+  // update user (PUT)
+  async updateUser(req, res) {
+    try {
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+      user.username = req.body.username;
+      user.email = req.body.email;
+      const updatedUser = await user.save();
+      res.json(updatedUser);
+    } catch (err) {
+      res.status(400).json({ message: err.message });
+    }
+  },
+    
   // Delete a user and associated thoughts
   async deleteUser(req, res) {
     try {
