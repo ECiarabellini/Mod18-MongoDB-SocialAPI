@@ -1,0 +1,21 @@
+{
+  "name": "mod18-mongodb-socialapi",
+  "version": "1.0.0",
+  "description": "MSU Coding Bootcamp Module 18 Challenge: NoSQL Challenge - Social Network API",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "dev": "nodemon index",
+    "seed": "node utils/seed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
